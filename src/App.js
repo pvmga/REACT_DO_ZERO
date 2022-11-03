@@ -1,15 +1,23 @@
+import { 
+  BrowserRouter as Router, 
+  Routes, 
+  Route 
+} from 'react-router-dom';
+
 import './App.css';
 import FormularioProduto from './components/FormularioProduto';
-import HeaderApp from './components/HeaderApp';
-import TabelaPessoa from './components/TabelaProduto';
+import FormularioPessoa from './components/FormularioPessoa';
+import FormularioHome from './components/FormularioHome';
 
 function App() {
   return (
-    <div className="App">
-      <HeaderApp />
-      <FormularioProduto />
-      <TabelaPessoa />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<FormularioHome />} />
+        <Route path="/produto" element={<FormularioProduto />} />
+        <Route path="/pessoa" element={<FormularioPessoa />} />
+      </Routes>
+    </Router>
   );
 }
 
