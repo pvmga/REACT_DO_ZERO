@@ -13,6 +13,8 @@ function FormularioProduto() {
     }
 
     const [validaBtn, setValidaBtn] = useState(true);
+
+    // Array com todos produtos da listagem
     const [produtos, setProdutos] = useState([]);
     const [objProduto, setObjProduto] = useState(produto);
 
@@ -29,6 +31,37 @@ function FormularioProduto() {
         setObjProduto({...objProduto, [e.target.name]:e.target.value});
     }
 
+    // cadastrar produto
+    const cadastrarProduto = () => {
+        fetch("http://localhost:8090/cadastrar", {
+            method:'POST',
+            body: JSON.stringify(objProduto),
+            headers: {
+                'Content-type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(retorno => retorno.json())
+        .then(retorno_convertido => {
+            if (retorno_convertido.mensagem !== undefined) {
+                alert(retorno_convertido.mensagem);
+                console.log(retorno_convertido);
+            } else {
+                setProdutos([...produtos, retorno_convertido]);
+                alert('Cadastro realizado com sucesso!');
+                limparFormulario();
+            }
+        })
+    }
+
+    // Limpar formulário
+    const limparFormulario = () => {
+        setObjProduto(produto);
+        
+        // setValidaBtn(true);
+    }
+    
+
     return(
         <div>
             <HeaderApp />
@@ -43,13 +76,13 @@ function FormularioProduto() {
                     </nav>
                     
                     <input type="text" name="codigoProduto" placeholder="Codigo produto" className="form-control" disabled />
-                    <input type="text" onChange={aoDigitar} name="descricao" placeholder="Descrição produto" className="form-control" />
-                    <input type="number" onChange={aoDigitar} name="estoque" placeholder="Quantidade em estoque" className="form-control" />
-                    <input type="text" onChange={aoDigitar} name="marca" placeholder="Marca produto" className="form-control" />
+                    <input type="text" value={objProduto.descricao} onChange={aoDigitar} name="descricao" placeholder="Descrição produto" className="form-control" />
+                    <input type="number" value={objProduto.estoque} onChange={aoDigitar} name="estoque" placeholder="Quantidade em estoque" className="form-control" />
+                    <input type="text" value={objProduto.marca} onChange={aoDigitar} name="marca" placeholder="Marca produto" className="form-control" />
                     {
                         validaBtn
                         ?
-                        <input type='button' value='Cadastrar' className="btn btn-primary" />          
+                        <input type='button' onClick={cadastrarProduto} value='Cadastrar' className="btn btn-primary" />          
                         :
                         <div>
                             <input type='button' value='Alterar' className="btn btn-warning" />
