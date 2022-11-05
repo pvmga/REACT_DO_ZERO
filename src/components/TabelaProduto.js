@@ -1,4 +1,6 @@
-function TabelaPessoa({dadosProdutos}) {
+import React from 'react';
+
+function TabelaPessoa({dadosProdutos, selecionarProduto}) {
     return(
         <div>
             {/* <p>{JSON.stringify(dadosProdutos)}</p> */}
@@ -23,7 +25,7 @@ function TabelaPessoa({dadosProdutos}) {
                                 <td>{obj.descricao}</td>
                                 <td>{obj.marca}</td>
                                 <td>{obj.estoque}</td>
-                                <td><button className="btn btn-success">Selecionar</button></td>
+                                <td><button onClick={() => {selecionarProduto(indice)}} className="btn btn-success">Selecionar</button></td>
                             </tr>
                         ))
                     }

@@ -1,7 +1,7 @@
 import HeaderApp from './HeaderApp';
 import TabelaProduto from './TabelaProduto';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function FormularioProduto() {
@@ -12,16 +12,31 @@ function FormularioProduto() {
         estoque: ''
     }
 
+    const urlPadrao = "http://localhost:8080";
+
     const [validaBtn, setValidaBtn] = useState(true);
 
     // Array com todos produtos da listagem
     const [produtos, setProdutos] = useState([]);
     const [objProduto, setObjProduto] = useState(produto);
 
+    // Limpar formulário
+    const limparFormulario = () => {
+        setObjProduto(produto);
+        
+        setValidaBtn(true);
+    }
+
+    const selecionarProduto = (indice) => {
+        console.log(produtos);
+        console.log(produtos[indice]);
+        setObjProduto(produtos[indice]);
+        setValidaBtn(false);
+    }
 
     // useEffect
     useEffect(()=>{
-        fetch("http://localhost:8090/listar")
+        fetch(urlPadrao+"/listar")
         .then(retorno => retorno.json())
         .then(retorno_convertido => setProdutos(retorno_convertido));
     }, []);
@@ -33,7 +48,7 @@ function FormularioProduto() {
 
     // cadastrar produto
     const cadastrarProduto = () => {
-        fetch("http://localhost:8090/cadastrar", {
+        fetch(urlPadrao+"/cadastrar", {
             method:'POST',
             body: JSON.stringify(objProduto),
             headers: {
@@ -54,11 +69,75 @@ function FormularioProduto() {
         })
     }
 
-    // Limpar formulário
-    const limparFormulario = () => {
-        setObjProduto(produto);
-        
-        // setValidaBtn(true);
+    // Remover produto
+    const removerProduto = () => {
+        fetch(urlPadrao+"/deletar/" + objProduto.codigo, {
+        method:'delete',
+        headers:{
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        }
+        })
+        .then(retorno=> retorno.json())
+        .then(retorno_convertido => {
+            // console.log(retorno_convertido)
+            // Mensagem
+            alert(retorno_convertido.mensagem);
+            let vetorTemp = [...produtos];
+
+            // Indice
+            let indice = vetorTemp.findIndex((p) => {
+                return p.codigo === objProduto.codigo;
+            });
+
+            // Remover produto do vetorTemp
+            vetorTemp.splice(indice, 1);
+
+            // Atualizar o vetor de produtos
+            setProdutos(vetorTemp);
+
+            limparFormulario();
+        })
+    }
+
+    // Alterar produto
+    const alterarProduto = () => {
+        fetch(urlPadrao+"/alterar", {
+        method:'put',
+        body:JSON.stringify(objProduto),
+        headers:{
+            'Content-type': 'application/json',
+            'Accept': 'application/json'
+        }
+        })
+        .then(retorno=> retorno.json())
+        .then(retorno_convertido => {
+        // console.log(retorno_convertido)
+        if (retorno_convertido.mensagem !== undefined) {
+            alert(retorno_convertido.mensagem);
+            console.log(retorno_convertido);
+        } else {
+            
+            // Mensagem
+            alert('Produto alterado com sucesso!');
+
+            let vetorTemp = [...produtos];
+
+            // Indice
+            let indice = vetorTemp.findIndex((p) => {
+                return p.codigo === objProduto.codigo;
+            });
+    
+            // Alterar produto do vetorTemp
+            vetorTemp[indice] = objProduto;
+    
+            // Atualizar o vetor de produtos
+            setProdutos(vetorTemp);
+
+            // Limpar o formulário
+            limparFormulario();
+        }
+        })
     }
     
 
@@ -85,15 +164,15 @@ function FormularioProduto() {
                         <input type='button' onClick={cadastrarProduto} value='Cadastrar' className="btn btn-primary" />          
                         :
                         <div>
-                            <input type='button' value='Alterar' className="btn btn-warning" />
-                            <input type='button' value='Remover' className="btn btn-danger" />
-                            <input type='button' value='Cancelar' className="btn btn-secondary" />
+                            <input type='button' value='Alterar' onClick={alterarProduto} className="btn btn-warning" />
+                            <input type='button' value='Remover' onClick={removerProduto} className="btn btn-danger" />
+                            <input type='button' value='Cancelar' onClick={limparFormulario} className="btn btn-secondary" />
                         </div>
                     }
 
                 </form>
             </div>
-            <TabelaProduto dadosProdutos={produtos} />
+            <TabelaProduto dadosProdutos={produtos} selecionarProduto={selecionarProduto} />
         </div>
     )
 }

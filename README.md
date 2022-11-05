@@ -1,70 +1,94 @@
-# Getting Started with Create React App
+### DESAFIO
+1. Primeiro projeto criado com react + bootstrap + Spring Boot + MySQL
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### INFORMAÇÕES IMPORTANTES
+1. JDK<br>
+2. NODE JS<br>
+3. VS Code -> EXTENSION PACK FOR JAVA | SPRING BOOT EXTENSION PACK | MYSQL | LOMBOKANNOTATIONS SUPPORT FOR VS CODE <br>
 
-## Available Scripts
+### PASSOS RESUMIDOS <br >
+1. Criar projeto <br >
+2. Criar arquivos Formulario.js e Tabela.js <br >
+3. Adicionar bootstrap public -> index.html <br >
+4. Limpar estrutura do src -> App.css <br >
+5. Criar constante para gerenciar quando ou não exibir o botão. Inicia-la com true por exemplo <br >
+6. Enviar a condição do botão para validação no formulário <br >
+7. Criar const com useEffect chamando API de listagem. <br >
+8. Passar os produtos para o componente de listagem e exibi-los. <br >
+9. Criar objeto para gerenciar produto. <br >
+10. Criar UseState para manipular Produto. <br >
+11. Obter informações do formulário. <br > 
+12. Cadastrar produto, caso de certo, atualizar lista e limpar formulário.<br >
+13. Selecionar produto.<br >
+14. Cancelando alteração e exclusão. <br >
+15. Remover cadastro. <br >
+16. Alterar cadastro. <br >
 
-In the project directory, you can run:
 
-### `npm start`
+### 1. Criar Projeto React<br >
+1. npx create-react-app front <br >
+2. npm start <br >
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2. Criar arquivos <br>
+1. src -> Formulario.js (É um componente)<br >
+2. src -> Tabela.js (É um componente)<br >
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 3. Adicionando bootstrap <br >
+1. public -> index.html <br >
 
-### `npm test`
+### 4. Apagar estrutura dentro do arquivo e adicionar a nova <br >
+1. src -> App.css <br >
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 5. Visibilidade dos botões <br>
+1. src -> App.js criar constante para trabalhar com essa visibilidade<br >
+2. passar o btnCadastrar criado como const, no formulário <Formulario botao={btnCadastrar} /> <br >
+3. Formulario.js -> receber na função o nome da propriedade aplicad no App.js {botao} <br >
+4. Criar condicional para verificar quando exibir os botões. Quando for true exibirá apenas o botão Cadastrar<br>
 
-### `npm run build`
+### 6. Obtendo produtos <br >
+1. criar um const [produtos, setProdutos] = useState([]); produtos irá receber um vetor de dados. <br >
+2. App.js useEffect() <br >
+3. Para testar podemos ir em nosso return utilizar o comando {JSON.stringify(produtos)} dentro de uma tag p por exemplo <br />
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 7. Exibindo os produtos na tabela <br />
+1. App.js -> Criar uma propriedade onde queremos enviar os produtos e passa através por parametro. <br />
+2. Receber a propriedade no arquivo de tabela. <br />
+3. Criar um map para fazer laço enquanto tiver registros. <br />
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 8. Criando objeto produto <br />
+1. Objeto servira pra ajudar selecionar -> cadastrar, alterar, excluir  e selecionar produto...<br />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 9. UseState para manipular <br >
+1. Criar const para conseguir de forma dinamica manipular o objeto produto. const [objProduto, setObjProduto] = useState(produto); <br >
+2. Para verificar se está tudo certo, podemos ir return e passar o objProduto dentro do stringify <br >
 
-### `npm run eject`
+### 10. Obtendo dados do formulário <br >
+1. Criar código para escutar o que está sendo digitado e passar para o componente formulário.<br >
+2. Utilizar onChange e name, o name necessita que seja igual ao nome do objeto produto criado no App.js<br >
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 11. Cadastrar produto <br >
+1. Criar método chamando API de cadastramento <br >
+2. Passar para o formulário o método cadastrar. E utilizar no botão. <br >
+3. Atualizar lista. <br >
+4. Limpar formulário. <br 
+5. Passar objProduto para o formulário. <br >
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 12. Selecionar produto <br >
+1. Passar a função selecionarProduto para a tabela.<br >
+2. Receber a função e coloca-la no onClick. <br >
+3. Retornar o index para o App. <br >
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 13. Cancelando alteração e exclusão <br >
+1. Passar a função limparFormulario para o formulário<br >
+2. Ao clicar limpa e retorna o botão de cadastrar. <br >
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 14. Remover cadastro <br >
+1. Criar const recebendo função de remover. <br >
+2. Passar a função para o fomrulário. <br >
 
-## Learn More
+### 15. Alterar produto <br >
+1. Criar const recebendo função de alterar. <br >
+2. Passar a função para o formulário. <br >
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://www.youtube.com/watch?v=3WdRR0sfgzM&list=PLWXw8Gu52TRKouXUo3Abu33_ODPXZTz64&index=34
