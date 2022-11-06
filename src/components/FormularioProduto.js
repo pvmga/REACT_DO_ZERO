@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from 'react';
+
 import HeaderApp from './HeaderApp';
 import TabelaProduto from './TabelaProduto';
 
-import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function FormularioProduto() {
@@ -28,8 +29,8 @@ function FormularioProduto() {
     }
 
     const selecionarProduto = (indice) => {
-        console.log(produtos);
-        console.log(produtos[indice]);
+        // console.log(produtos);
+        // console.log(produtos[indice]);
         setObjProduto(produtos[indice]);
         setValidaBtn(false);
     }
@@ -38,7 +39,7 @@ function FormularioProduto() {
     useEffect(()=>{
         fetch(urlPadrao+"/listar")
         .then(retorno => retorno.json())
-        .then(retorno_convertido => setProdutos(retorno_convertido));
+        .then(retorno_convertido => setProdutos(retorno_convertido))
     }, []);
 
     const aoDigitar = (e) => {
@@ -112,31 +113,31 @@ function FormularioProduto() {
         })
         .then(retorno=> retorno.json())
         .then(retorno_convertido => {
-        // console.log(retorno_convertido)
-        if (retorno_convertido.mensagem !== undefined) {
-            alert(retorno_convertido.mensagem);
-            console.log(retorno_convertido);
-        } else {
-            
-            // Mensagem
-            alert('Produto alterado com sucesso!');
+            // console.log(retorno_convertido)
+            if (retorno_convertido.mensagem !== undefined) {
+                alert(retorno_convertido.mensagem);
+                console.log(retorno_convertido);
+            } else {
+                
+                // Mensagem
+                alert('Produto alterado com sucesso!');
 
-            let vetorTemp = [...produtos];
+                let vetorTemp = [...produtos];
 
-            // Indice
-            let indice = vetorTemp.findIndex((p) => {
-                return p.codigo === objProduto.codigo;
-            });
-    
-            // Alterar produto do vetorTemp
-            vetorTemp[indice] = objProduto;
-    
-            // Atualizar o vetor de produtos
-            setProdutos(vetorTemp);
+                // Indice
+                let indice = vetorTemp.findIndex((p) => {
+                    return p.codigo === objProduto.codigo;
+                });
+        
+                // Alterar produto do vetorTemp
+                vetorTemp[indice] = objProduto;
+        
+                // Atualizar o vetor de produtos
+                setProdutos(vetorTemp);
 
-            // Limpar o formulário
-            limparFormulario();
-        }
+                // Limpar o formulário
+                limparFormulario();
+            }
         })
     }
     
@@ -144,7 +145,7 @@ function FormularioProduto() {
     return(
         <div>
             <HeaderApp />
-            <p>{JSON.stringify(objProduto)}</p>
+            {/* <p>{JSON.stringify(objProduto)}</p> */}
             <div className="container py-4">
                 <form>
                     <nav aria-label="breadcrumb">
@@ -154,7 +155,7 @@ function FormularioProduto() {
                         </ol>
                     </nav>
                     
-                    <input type="text" name="codigoProduto" placeholder="Codigo produto" className="form-control" disabled />
+                    <input type="text" value={objProduto.codigo} name="codigoProduto" placeholder="Codigo produto" className="form-control" disabled />
                     <input type="text" value={objProduto.descricao} onChange={aoDigitar} name="descricao" placeholder="Descrição produto" className="form-control" />
                     <input type="number" value={objProduto.estoque} onChange={aoDigitar} name="estoque" placeholder="Quantidade em estoque" className="form-control" />
                     <input type="text" value={objProduto.marca} onChange={aoDigitar} name="marca" placeholder="Marca produto" className="form-control" />

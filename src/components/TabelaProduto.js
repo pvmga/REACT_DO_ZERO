@@ -7,7 +7,7 @@ function TabelaPessoa({dadosProdutos, selecionarProduto}) {
             <table className="table text-center">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        {/* <th>#</th> */}
                         <th>Código</th>
                         <th>Descrição</th>
                         <th>Marca</th>
@@ -19,8 +19,8 @@ function TabelaPessoa({dadosProdutos, selecionarProduto}) {
                 <tbody>
                     {
                         dadosProdutos.map((obj, indice) =>(
-                            <tr  key={indice}>
-                                <td>{indice+1}</td>
+                            <tr key={indice}>
+                                {/* <td>{indice+1}</td> */}
                                 <td>{obj.codigo}</td>
                                 <td>{obj.descricao}</td>
                                 <td>{obj.marca}</td>
